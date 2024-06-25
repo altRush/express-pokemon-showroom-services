@@ -3,6 +3,6 @@ import { getPokemonByNameController } from '../controllers/get-pokemon.controlle
 
 const router = Router();
 
-router.get('/getPokemonByName', getPokemonByNameController);
+router.get('/getPokemonByName/:pokemonName', getPokemonByNameController);
 
 export default router;

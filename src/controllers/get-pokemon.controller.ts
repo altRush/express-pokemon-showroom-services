@@ -5,7 +5,7 @@ export const getPokemonByNameController = async (
 	req: Request,
 	res: Response
 ) => {
-	const pokemonName = req.query.name as string;
+	const { pokemonName } = req.params;
 	const results = await getPokemonByNameService(pokemonName);
 	res.json({
 		pokemons: results
