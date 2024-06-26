@@ -1,14 +1,18 @@
-import postgres from 'postgres';
+import pg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const sql = postgres('', {
+const client = new pg.Client({
+	user: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
 	host: process.env.DB_HOST,
 	port: Number(process.env.DB_PORT),
-	database: process.env.DB_DATABASE,
-	username: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD
+	database: process.env.DB_DATABASE
 });
 
-export default sql;
+(async () => {
+	await client.connect();
+})();
+
+export default client;
