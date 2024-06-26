@@ -1,10 +1,25 @@
-import sql from '../utils/db';
+import client from '../utils/db';
+import { jsToSqlStringArrayConverter } from '../utils/sql-array-converter';
 
 export async function getStoredPokemonByNameModel(pokemonName: string) {
-	const pokemon = await sql`
-    SELECT pokemon_name, url, sprite, pokemon_types
+	const { rows } = await client.query(
+		`SELECT name, url, sprite, types
     FROM stored_pokemons
-    WHERE pokemon_name = ${pokemonName}
-  `;
-	return pokemon;
+    WHERE name = '${pokemonName}'`
+	);
+
+	const pokemon = rows[0];
+
+	const sqlPokemonTypesArray = jsToSqlStringArrayConverter(pokemon.types);
+
+	const { rows: pokemonTypes } = await client.query(
+		`select t.* from unnest(array[${sqlPokemonTypesArray}]) type_name_s left join types t on t.type_name = type_name_s`
+	);
+
+	const pokemonProfile = {
+		...pokemon,
+		types: pokemonTypes
+	};
+
+	return pokemonProfile;
 }
