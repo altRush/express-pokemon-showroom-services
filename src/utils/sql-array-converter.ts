@@ -1,3 +1,5 @@
-export const jsToSqlStringArrayConverter = (array: Array<string>) => {
+export const jsArrayToSqlStringifiedArrayConverter = (
+	array: Array<string>
+): string => {
 	return array.map((type: string) => `'${type}'`).join(',');
 };

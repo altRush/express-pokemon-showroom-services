@@ -1,17 +1,19 @@
+import { QueryResult } from 'pg';
 import client from '../utils/db';
-import { jsToSqlStringArrayConverter } from '../utils/sql-array-converter';
+import { jsArrayToSqlStringifiedArrayConverter } from '../utils/sql-array-converter';
 import { PokemonProfile } from './PokemonProfile';
 
-export async function addPokemonToStoreModel(pokemonProfile: PokemonProfile) {
+export async function addPokemonToStoreModel(
+	pokemonProfile: PokemonProfile
+): Promise<QueryResult<any>> {
 	const { name, url, sprite, types } = pokemonProfile;
 
-	const typeNamesArray = types.map(type => type.type.name);
+	const sqlTypeNamesStringifiedArray =
+		jsArrayToSqlStringifiedArrayConverter(types);
 
-	const sqlTypeNamesArray = jsToSqlStringArrayConverter(typeNamesArray);
-
-	const result = await client.query(`
+	const result: QueryResult<any> = await client.query(`
 		INSERT INTO public.stored_pokemons (name, url, sprite, types)
-		VALUES ('${name}', '${url}','${sprite}',ARRAY[${sqlTypeNamesArray}]);
+		VALUES ('${name}','${url}','${sprite}',ARRAY[${sqlTypeNamesStringifiedArray}]);
 		`);
 
 	return result;

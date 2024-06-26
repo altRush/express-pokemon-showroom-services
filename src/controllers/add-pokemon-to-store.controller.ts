@@ -6,19 +6,23 @@ import { HttpResponseMessage } from '../constants/http-response-messages.enums';
 export const addPokemonToStoreController = async (
 	req: Request,
 	res: Response
-) => {
+): Promise<void> => {
 	try {
 		const { pokemon } = req.body;
-		const { command, rowCount } = await addPokemonToStoreService(pokemon);
+		const success = await addPokemonToStoreService(pokemon);
 
-		if (command === 'INSERT' && rowCount && rowCount >= 1) {
+		if (success) {
 			res.json({
 				code: HttpStatusCode.CREATED,
-				command,
 				message: HttpResponseMessage.ADD_SUCCESS
 			});
 			return;
 		}
+
+		res.json({
+			code: HttpStatusCode.BAD_REQUEST,
+			message: HttpResponseMessage.ADD_FAILED
+		});
 	} catch (e) {
 		res.json({
 			code: HttpStatusCode.SERVICE_UNAVAILABLE,
