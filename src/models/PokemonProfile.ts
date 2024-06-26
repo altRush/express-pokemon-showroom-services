@@ -6,7 +6,6 @@ export interface PokemonProfile {
 }
 
 export type PokemonTypes = {
-	slot: number;
 	type: {
 		name: string;
 		url: string;
