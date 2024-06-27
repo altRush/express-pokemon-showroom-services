@@ -22,18 +22,18 @@ export const getStoredPokemonByNameController = async (
 			pokemonName
 		);
 
-		if (pokemonProfileByName) {
+		if (!pokemonProfileByName) {
 			res.json({
-				code: HttpStatusCode.OK,
-				message: HttpResponseMessage.GET_SUCCESS,
-				pokemon: pokemonProfileByName
+				code: HttpStatusCode.BAD_REQUEST,
+				message: HttpResponseMessage.GET_FAIL
 			});
 			return;
 		}
 
 		res.json({
-			code: HttpStatusCode.BAD_REQUEST,
-			message: HttpResponseMessage.GET_FAIL
+			code: HttpStatusCode.OK,
+			message: HttpResponseMessage.GET_SUCCESS,
+			pokemon: pokemonProfileByName
 		});
 	} catch (e) {
 		res.json({
