@@ -1,4 +1,4 @@
-import { PokemonProfile } from '../models/PokemonProfile';
+import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
 import { addPokemonToStoreModel } from '../models/add-pokemon-to-store.model';
 
 export const addPokemonToStoreService = async (

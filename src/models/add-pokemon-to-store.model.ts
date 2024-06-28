@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg';
 import client from '../utils/db';
 import { jsArrayToSqlStringifiedArrayConverter } from '../utils/sql-array-converter';
-import { PokemonProfile } from './PokemonProfile';
+import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
 
 export async function addPokemonToStoreModel(
 	pokemonProfile: PokemonProfile
