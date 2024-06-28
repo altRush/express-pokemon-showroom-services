@@ -1,7 +1,5 @@
 import { QueryResult } from 'pg';
 import client from '../utils/db';
-import { jsArrayToSqlStringifiedArrayConverter } from '../utils/sql-array-converter';
-import { PokemonProfile } from './PokemonProfile';
 
 export async function checkGen1IfExists(pokemonName: string): Promise<boolean> {
 	const tableName = 'all_pokemons_gen_1';
