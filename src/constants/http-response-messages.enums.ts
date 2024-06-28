@@ -4,5 +4,7 @@ export enum HttpResponseMessage {
 	UPDATE_SUCCESS = 'Pokemon from the store is successfully updated',
 	UPDATE_FAILED = 'Failed to update the pokemon in the store',
 	GET_SUCCESS = 'Pokemon is successfully retrieved from the store',
-	GET_FAIL = 'Failed to retrieve Pokemon from store'
+	GET_FAIL = 'Failed to retrieve Pokemon from store',
+	GET_UNKNOWN = 'Unknown Pokemon',
+	GET_NOT_FOUND = 'Pokemon does not exist in store'
 }

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getStoredPokemonByNameService } from '../services/get-stored-pokemon.service';
 import HttpStatusCode from '../constants/http-statuses.enums';
 import { HttpResponseMessage } from '../constants/http-response-messages.enums';
+import { checkGen1IfExists } from '../models/check-gen-1-if-exists.model';
 
 export const getStoredPokemonByNameController = async (
 	req: Request,
@@ -18,14 +19,24 @@ export const getStoredPokemonByNameController = async (
 	}
 
 	try {
+		const hasPokemon = await checkGen1IfExists(pokemonName);
+
+		if (!hasPokemon) {
+			res.json({
+				code: HttpStatusCode.BAD_REQUEST,
+				message: HttpResponseMessage.GET_UNKNOWN
+			});
+			return;
+		}
+
 		const pokemonProfileByName = await getStoredPokemonByNameService(
 			pokemonName
 		);
 
-		if (!pokemonProfileByName) {
+		if (pokemonProfileByName === null) {
 			res.json({
-				code: HttpStatusCode.BAD_REQUEST,
-				message: HttpResponseMessage.GET_FAIL
+				code: HttpStatusCode.NOT_FOUND,
+				message: HttpResponseMessage.GET_NOT_FOUND
 			});
 			return;
 		}

@@ -1,4 +1,5 @@
 import { PokemonProfile } from '../models/PokemonProfile';
+import { checkGen1IfExists } from '../models/check-gen-1-if-exists.model';
 import { getStoredPokemonByNameModel } from '../models/get-stored-pokemon.model';
 
 export const getStoredPokemonByNameService = async (
