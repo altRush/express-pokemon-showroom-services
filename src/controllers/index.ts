@@ -1,4 +1,3 @@
-import { addPokemonToStoreController } from './add-pokemon-to-store.controller';
-import { getStoredPokemonByNameController } from './get-stored-pokemon.controller';
+import { StoreController } from './store.controller';
 
-export { addPokemonToStoreController, getStoredPokemonByNameController };
+export { StoreController };

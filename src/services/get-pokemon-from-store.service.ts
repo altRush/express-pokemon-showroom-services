@@ -1,8 +1,8 @@
 import { PokemonProfile } from '../models/PokemonProfile';
 import { checkGen1IfExists } from '../models/check-gen-1-if-exists.model';
-import { getStoredPokemonByNameModel } from '../models/get-stored-pokemon.model';
+import { getStoredPokemonByNameModel } from '../models/get-pokemon-from-store.model';
 
-export const getStoredPokemonByNameService = async (
+export const getPokemonByNameFromStoreService = async (
 	pokemonName: string
 ): Promise<PokemonProfile | null> => {
 	const pokemon = await getStoredPokemonByNameModel(pokemonName);
