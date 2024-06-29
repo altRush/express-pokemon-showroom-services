@@ -1,8 +1,8 @@
-import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 import { addPokemonToStoreModel } from '../models/add-pokemon-to-store.model';
 
 export const addPokemonToStoreService = async (
-	pokemon: PokemonProfile
+	pokemon: IPokemonProfile
 ): Promise<boolean> => {
 	try {
 		const { command, rowCount } = await addPokemonToStoreModel(pokemon);

@@ -1,10 +1,10 @@
 import client from '../utils/db';
 import { jsArrayToSqlStringifiedArrayConverter } from '../utils/sql-array-converter';
-import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 
-export async function getStoredPokemonByNameModel(
+export async function getPokemonByNameFromStoreModel(
 	pokemonName: string
-): Promise<PokemonProfile | null> {
+): Promise<IPokemonProfile | null> {
 	const { rows } = await client.query(
 		`SELECT name, url, sprite, types
     FROM stored_pokemons
@@ -15,7 +15,7 @@ export async function getStoredPokemonByNameModel(
 		return null;
 	}
 
-	const pokemon: PokemonProfile = rows[0];
+	const pokemon: IPokemonProfile = rows[0];
 
 	const sqlPokemonTypesArray = jsArrayToSqlStringifiedArrayConverter(
 		pokemon.types

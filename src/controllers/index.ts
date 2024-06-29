@@ -1,3 +1,3 @@
-import { StoreController } from './store.controller';
+import StoreController from './store.controller';
 
 export { StoreController };

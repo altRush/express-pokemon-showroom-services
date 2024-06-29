@@ -1,4 +1,3 @@
-import { addPokemonToStoreModel } from './add-pokemon-to-store.model';
-import { getStoredPokemonByNameModel } from './get-pokemon-from-store.model';
+import storeModel from './store.model';
 
-export { addPokemonToStoreModel, getStoredPokemonByNameModel };
+export { storeModel };

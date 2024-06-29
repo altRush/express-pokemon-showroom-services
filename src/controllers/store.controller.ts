@@ -5,8 +5,8 @@ import { addPokemonToStoreService } from '../services/add-pokemon-to-store.servi
 import { checkGen1IfExists } from '../models/check-gen-1-if-exists.model';
 import { getPokemonByNameFromStoreService } from '../services/get-pokemon-from-store.service';
 
-export class StoreController {
-	public async getStoredPokemonByName(
+class StoreController {
+	public async getPokemonByNameFromStore(
 		req: Request,
 		res: Response
 	): Promise<void> {
@@ -74,3 +74,7 @@ export class StoreController {
 		}
 	}
 }
+
+const storeController = new StoreController();
+
+export default storeController;

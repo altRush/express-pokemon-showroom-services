@@ -1,10 +1,10 @@
 import { QueryResult } from 'pg';
 import client from '../utils/db';
 import { jsArrayToSqlStringifiedArrayConverter } from '../utils/sql-array-converter';
-import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 
 export async function addPokemonToStoreModel(
-	pokemonProfile: PokemonProfile
+	pokemonProfile: IPokemonProfile
 ): Promise<QueryResult<any>> {
 	const { name, url, sprite, types } = pokemonProfile;
 

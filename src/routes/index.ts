@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { StoreController } from '../controllers';
+import storeController from '../controllers/store.controller';
 
 const router = Router();
-const { getStoredPokemonByName, addPokemonToStore } = new StoreController();
+const { getPokemonByNameFromStore, addPokemonToStore } = storeController;
 
-router.get('/store/:pokemonName', getStoredPokemonByName);
+router.get('/store/:pokemonName', getPokemonByNameFromStore);
 
 router.post('/store', addPokemonToStore);
 
