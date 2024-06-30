@@ -1,12 +1,12 @@
 import { QueryResult } from 'pg';
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 import { jsArrayToSqlStringifiedArrayConverter, client } from '../utils';
-import { StoreModelUtils } from '../interfaces/Store.interface';
+import { IStoreModelUtils } from '../interfaces/Store.interface';
 
 export class StoreModel {
-	utils: StoreModelUtils;
+	utils: IStoreModelUtils;
 
-	constructor(utils: StoreModelUtils) {
+	constructor(utils: IStoreModelUtils) {
 		this.utils = utils;
 	}
 

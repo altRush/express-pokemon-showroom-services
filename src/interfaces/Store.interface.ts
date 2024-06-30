@@ -1,8 +1,8 @@
 import { Client } from 'pg';
 
-interface StoreModelUtils {
+interface IStoreModelUtils {
 	jsArrayToSqlStringifiedArrayConverter(stringArray: string[]): string;
 	client: Client;
 }
 
-export { StoreModelUtils };
+export { IStoreModelUtils };
