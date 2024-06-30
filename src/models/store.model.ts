@@ -10,9 +10,9 @@ export class StoreModel {
 		this.utils = utils;
 	}
 
-	public async addPokemonToStore(
+	public addPokemonToStore = async (
 		pokemonProfile: IPokemonProfile
-	): Promise<QueryResult<any>> {
+	): Promise<QueryResult<any>> => {
 		const { name, url, sprite, types } = pokemonProfile;
 
 		const sqlTypeNamesStringifiedArray =
@@ -24,9 +24,9 @@ export class StoreModel {
       `);
 
 		return result;
-	}
+	};
 
-	public async checkGen1IfExists(pokemonName: string): Promise<boolean> {
+	public checkGen1IfExists = async (pokemonName: string): Promise<boolean> => {
 		const tableName = 'all_pokemons_gen_1';
 		const result: QueryResult<any> = await client.query(`
       SELECT exists (SELECT 1 FROM ${tableName} apg WHERE name = '${pokemonName}' LIMIT 1);
@@ -35,11 +35,11 @@ export class StoreModel {
 		const hasPokemon = result.rows[0].exists;
 
 		return hasPokemon;
-	}
+	};
 
-	public async getPokemonByNameFromStoreModel(
+	public getPokemonByNameFromStore = async (
 		pokemonName: string
-	): Promise<IPokemonProfile | null> {
+	): Promise<IPokemonProfile | null> => {
 		const { rows } = await client.query(
 			`SELECT name, url, sprite, types
       FROM stored_pokemons
@@ -66,7 +66,15 @@ export class StoreModel {
 		};
 
 		return pokemonProfile;
-	}
+	};
+
+	public deletePokemonFromStore = async (pokemonStoreId: number) => {
+		const results = await client.query(
+			`DELETE from stored_pokemon WHERE key_column = ${pokemonStoreId}`
+		);
+
+		return results.rowCount;
+	};
 }
 
 const storeModel = new StoreModel({

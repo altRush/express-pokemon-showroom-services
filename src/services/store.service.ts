@@ -9,9 +9,9 @@ export class StoreService {
 		this.storeModel = storeModel;
 	}
 
-	public async addPokemonToStoreService(
+	public addPokemonToStoreService = async (
 		pokemon: IPokemonProfile
-	): Promise<boolean> {
+	): Promise<boolean> => {
 		try {
 			const { command, rowCount } = await this.storeModel.addPokemonToStore(
 				pokemon
@@ -30,6 +30,26 @@ export class StoreService {
 			}
 			throw e;
 		}
+	};
+
+	public getPokemonByNameFromStore = async (
+		pokemonName: string
+	): Promise<IPokemonProfile | null> => {
+		const pokemon = await this.storeModel.getPokemonByNameFromStore(
+			pokemonName
+		);
+
+		if (!pokemon) {
+			return null;
+		}
+
+		return pokemon;
+	};
+
+	public async checkGen1IfExists(pokemonName: string): Promise<boolean> {
+		const hasPokemon = this.storeModel.checkGen1IfExists(pokemonName);
+
+		return hasPokemon;
 	}
 }
 

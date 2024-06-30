@@ -1,15 +1,19 @@
 import { Request, Response } from 'express';
 import { HttpResponseMessage } from '../constants/http-response-messages.enums';
 import HttpStatusCode from '../constants/http-statuses.enums';
-import { addPokemonToStoreService } from '../services/add-pokemon-to-store.service';
-import { checkGen1IfExists } from '../models/check-gen-1-if-exists.model';
-import { getPokemonByNameFromStoreService } from '../services/get-pokemon-from-store.service';
+import storeService, { StoreService } from '../services/store.service';
 
 class StoreController {
-	public async getPokemonByNameFromStore(
+	storeService: StoreService;
+
+	constructor(storeService: StoreService) {
+		this.storeService = storeService;
+	}
+
+	public getPokemonByNameFromStore = async (
 		req: Request,
 		res: Response
-	): Promise<void> {
+	): Promise<void> => {
 		const { pokemonName } = req.params;
 
 		if (!pokemonName) {
@@ -20,7 +24,7 @@ class StoreController {
 		}
 
 		try {
-			const hasPokemon = await checkGen1IfExists(pokemonName);
+			const hasPokemon = await this.storeService.checkGen1IfExists(pokemonName);
 
 			if (!hasPokemon) {
 				res.status(HttpStatusCode.BAD_REQUEST).json({
@@ -29,9 +33,8 @@ class StoreController {
 				return;
 			}
 
-			const pokemonProfileByName = await getPokemonByNameFromStoreService(
-				pokemonName
-			);
+			const pokemonProfileByName =
+				await this.storeService.getPokemonByNameFromStore(pokemonName);
 
 			if (pokemonProfileByName === null) {
 				res.status(HttpStatusCode.NOT_FOUND).json({
@@ -49,12 +52,15 @@ class StoreController {
 				error: e
 			});
 		}
-	}
+	};
 
-	public async addPokemonToStore(req: Request, res: Response): Promise<void> {
+	public addPokemonToStore = async (
+		req: Request,
+		res: Response
+	): Promise<void> => {
 		try {
 			const { pokemon } = req.body;
-			const success = await addPokemonToStoreService(pokemon);
+			const success = await this.storeService.addPokemonToStoreService(pokemon);
 
 			if (success) {
 				res.status(HttpStatusCode.CREATED).json({
@@ -72,9 +78,9 @@ class StoreController {
 				message: HttpResponseMessage.ADD_FAILED
 			});
 		}
-	}
+	};
 }
 
-const storeController = new StoreController();
+const storeController = new StoreController(storeService);
 
 export default storeController;
