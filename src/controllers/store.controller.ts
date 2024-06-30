@@ -2,12 +2,15 @@ import { Request, Response } from 'express';
 import { HttpResponseMessage } from '../constants/http-response-messages.enums';
 import HttpStatusCode from '../constants/http-statuses.enums';
 import storeService, { StoreService } from '../services/store.service';
+import validateService, { ValidateService } from '../services/validate.service';
 
 class StoreController {
 	storeService: StoreService;
+	validateService: ValidateService;
 
-	constructor(storeService: StoreService) {
+	constructor(storeService: StoreService, validateService: ValidateService) {
 		this.storeService = storeService;
+		this.validateService = validateService;
 	}
 
 	public getPokemonByNameFromStore = async (
@@ -24,7 +27,9 @@ class StoreController {
 		}
 
 		try {
-			const hasPokemon = await this.storeService.checkGen1IfExists(pokemonName);
+			const hasPokemon = await this.validateService.checkGen1IfExists(
+				pokemonName
+			);
 
 			if (!hasPokemon) {
 				res.status(HttpStatusCode.BAD_REQUEST).json({
@@ -81,6 +86,6 @@ class StoreController {
 	};
 }
 
-const storeController = new StoreController(storeService);
+const storeController = new StoreController(storeService, validateService);
 
 export default storeController;

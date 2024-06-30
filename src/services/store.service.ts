@@ -45,12 +45,6 @@ export class StoreService {
 
 		return pokemon;
 	};
-
-	public async checkGen1IfExists(pokemonName: string): Promise<boolean> {
-		const hasPokemon = this.storeModel.checkGen1IfExists(pokemonName);
-
-		return hasPokemon;
-	}
 }
 
 const storeService = new StoreService(storeModel);

@@ -26,17 +26,6 @@ export class StoreModel {
 		return result;
 	};
 
-	public checkGen1IfExists = async (pokemonName: string): Promise<boolean> => {
-		const tableName = 'all_pokemons_gen_1';
-		const result: QueryResult<any> = await client.query(`
-      SELECT exists (SELECT 1 FROM ${tableName} apg WHERE name = '${pokemonName}' LIMIT 1);
-      `);
-
-		const hasPokemon = result.rows[0].exists;
-
-		return hasPokemon;
-	};
-
 	public getPokemonByNameFromStore = async (
 		pokemonName: string
 	): Promise<IPokemonProfile | null> => {
