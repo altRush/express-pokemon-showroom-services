@@ -5,4 +5,9 @@ interface IStoreModelUtils {
 	client: Client;
 }
 
-export { IStoreModelUtils };
+interface IStorePokemonResponse {
+	success: boolean;
+	message?: string;
+}
+
+export { IStoreModelUtils, IStorePokemonResponse };

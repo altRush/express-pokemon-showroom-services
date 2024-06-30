@@ -1,7 +1,10 @@
 import { QueryResult } from 'pg';
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 import { jsArrayToSqlStringifiedArrayConverter, client } from '../utils';
-import { IStoreModelUtils } from '../interfaces/Store.interface';
+import {
+	IStoreModelUtils,
+	IStorePokemonResponse
+} from '../interfaces/Store.interface';
 
 export class StoreModel {
 	utils: IStoreModelUtils;
@@ -12,30 +15,37 @@ export class StoreModel {
 
 	public addPokemonToStore = async (
 		pokemonProfile: IPokemonProfile
-	): Promise<QueryResult<any>> => {
+	): Promise<IStorePokemonResponse> => {
+		let successResponse = {
+			success: false
+		};
 		const { name, url, sprite, types } = pokemonProfile;
 
 		const sqlTypeNamesStringifiedArray =
 			this.utils.jsArrayToSqlStringifiedArrayConverter(types);
 
-		const result: QueryResult<any> = await client.query(`
+		const { command, rowCount } = await client.query(`
       INSERT INTO public.stored_pokemons (name, url, sprite, types)
       VALUES ('${name}','${url}','${sprite}',ARRAY[${sqlTypeNamesStringifiedArray}]);
       `);
 
-		return result;
+		if (command === 'INSERT' && rowCount) {
+			successResponse.success = true;
+		}
+
+		return successResponse;
 	};
 
 	public getPokemonByNameFromStore = async (
 		pokemonName: string
 	): Promise<IPokemonProfile | null> => {
-		const { rows } = await client.query(
+		const { rowCount, rows } = await client.query(
 			`SELECT name, url, sprite, types
       FROM stored_pokemons
       WHERE name = '${pokemonName}'`
 		);
 
-		if (!rows.length) {
+		if (!rowCount) {
 			return null;
 		}
 
@@ -57,9 +67,11 @@ export class StoreModel {
 		return pokemonProfile;
 	};
 
-	public deletePokemonFromStore = async (pokemonStoreId: number) => {
+	public deletePokemonFromStore = async (
+		pokemonStoreId: number
+	): Promise<number | null> => {
 		const results = await client.query(
-			`DELETE from stored_pokemon WHERE key_column = ${pokemonStoreId}`
+			`DELETE from stored_pokemons WHERE pokemon_store_id = ${pokemonStoreId}`
 		);
 
 		return results.rowCount;

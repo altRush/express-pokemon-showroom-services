@@ -6,5 +6,9 @@ export enum HttpResponseMessage {
 	GET_SUCCESS = 'Pokemon is successfully retrieved from the store',
 	GET_FAIL = 'Failed to retrieve Pokemon from store',
 	GET_UNKNOWN = 'Unknown Pokemon',
-	GET_NOT_FOUND = 'Pokemon does not exist in store'
+	GET_NOT_FOUND = 'Pokemon does not exist in store',
+	DELETE_SUCCESS = 'Pokemon is successfully removed from the store',
+	DELETE_FAILED = 'Failed to delete the pokemon from store',
+	DELETE_FAILED_NAN = 'Failed to delete the pokemon from store (Pokemon ID is not number)',
+	DELETE_NOT_FOUND = 'Pokemon ID does not exist in store'
 }

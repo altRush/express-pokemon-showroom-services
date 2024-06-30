@@ -1,4 +1,5 @@
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { IStorePokemonResponse } from '../interfaces/Store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {
@@ -10,19 +11,16 @@ export class StoreService {
 
 	public addPokemonToStoreService = async (
 		pokemon: IPokemonProfile
-	): Promise<boolean> => {
+	): Promise<IStorePokemonResponse> => {
+		let successResponse = { success: false };
 		try {
-			const { command, rowCount } = await this.storeModel.addPokemonToStore(
-				pokemon
-			);
+			const result = await this.storeModel.addPokemonToStore(pokemon);
 
-			let success = false;
-
-			if (command === 'INSERT' && rowCount && rowCount >= 1) {
-				success = true;
+			if (result) {
+				successResponse.success = true;
 			}
 
-			return success;
+			return successResponse;
 		} catch (e: unknown) {
 			if (e instanceof Error) {
 				throw e.message;
@@ -43,6 +41,26 @@ export class StoreService {
 		}
 
 		return pokemon;
+	};
+
+	public deletePokemonByNameFromStore = async (
+		pokemonNameId: number
+	): Promise<IStorePokemonResponse> => {
+		let successResponse = { success: false, message: '' };
+
+		if (typeof pokemonNameId !== 'number') {
+			successResponse.message = 'Pokemon ID is not a number';
+			return successResponse;
+		}
+
+		const result = await this.storeModel.deletePokemonFromStore(pokemonNameId);
+
+		if (!result) {
+			return successResponse;
+		}
+
+		successResponse.success = true;
+		return successResponse;
 	};
 }
 

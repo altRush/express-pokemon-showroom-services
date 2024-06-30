@@ -65,22 +65,59 @@ class StoreController {
 	): Promise<void> => {
 		try {
 			const { pokemon } = req.body;
-			const success = await this.storeService.addPokemonToStoreService(pokemon);
+			const successResponse = await this.storeService.addPokemonToStoreService(
+				pokemon
+			);
 
-			if (success) {
-				res.status(HttpStatusCode.CREATED).json({
-					message: HttpResponseMessage.ADD_SUCCESS
+			if (!successResponse.success) {
+				res.status(HttpStatusCode.BAD_REQUEST).json({
+					message: HttpResponseMessage.ADD_FAILED
 				});
 				return;
 			}
 
-			res.status(HttpStatusCode.BAD_REQUEST).json({
-				message: HttpResponseMessage.ADD_FAILED
+			res.status(HttpStatusCode.CREATED).json({
+				message: HttpResponseMessage.ADD_SUCCESS
 			});
 		} catch (e) {
 			res.status(HttpStatusCode.SERVICE_UNAVAILABLE).json({
 				error: e,
 				message: HttpResponseMessage.ADD_FAILED
+			});
+		}
+	};
+
+	public deletePokemonFromStore = async (
+		req: Request,
+		res: Response
+	): Promise<void> => {
+		const { pokemonStoreId } = req.body;
+
+		try {
+			const successResponse =
+				await this.storeService.deletePokemonByNameFromStore(pokemonStoreId);
+
+			if (!successResponse.success) {
+				if (successResponse.message === 'Pokemon ID is not a number') {
+					res.status(HttpStatusCode.BAD_REQUEST).json({
+						message: HttpResponseMessage.DELETE_FAILED_NAN
+					});
+					return;
+				}
+
+				res.status(HttpStatusCode.NOT_FOUND).json({
+					message: HttpResponseMessage.DELETE_NOT_FOUND
+				});
+				return;
+			}
+
+			res.status(HttpStatusCode.OK).json({
+				message: HttpResponseMessage.DELETE_SUCCESS
+			});
+		} catch (e) {
+			res.status(HttpStatusCode.SERVICE_UNAVAILABLE).json({
+				error: e,
+				message: HttpResponseMessage.DELETE_FAILED
 			});
 		}
 	};
