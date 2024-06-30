@@ -1,11 +1,10 @@
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
-import { IStoreModel } from '../interfaces/Store.interface';
-import { storeModel } from '../models';
+import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {
-	private storeModel: IStoreModel;
+	private storeModel: StoreModel;
 
-	constructor(storeModel: IStoreModel) {
+	constructor(storeModel: StoreModel) {
 		this.storeModel = storeModel;
 	}
 
