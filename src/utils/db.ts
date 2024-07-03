@@ -1,18 +1,18 @@
-import { Client, Pool } from 'pg';
+import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const client = new Client({
-	user: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD,
-	host: process.env.DB_HOST,
-	port: Number(process.env.DB_PORT),
-	database: process.env.DB_DATABASE
+const pool = new Pool({
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  database: process.env.DB_DATABASE,
 });
 
 (async () => {
-	await client.connect();
+  await pool.connect();
 })();
 
-export default client;
+export default pool;
