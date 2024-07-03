@@ -1,4 +1,3 @@
-import { QueryResult } from 'pg';
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
 import { jsArrayToSqlStringifiedArrayConverter, client } from '../utils';
 import {

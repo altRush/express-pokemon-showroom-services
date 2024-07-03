@@ -9,7 +9,7 @@ export class StoreService {
 		this.storeModel = storeModel;
 	}
 
-	public addPokemonToStoreService = async (
+	public addPokemonToStore = async (
 		pokemon: IPokemonProfile
 	): Promise<IStorePokemonResponse> => {
 		let successResponse = { success: false };

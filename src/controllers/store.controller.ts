@@ -65,7 +65,7 @@ class StoreController {
 	): Promise<void> => {
 		try {
 			const { pokemon } = req.body;
-			const successResponse = await this.storeService.addPokemonToStoreService(
+			const successResponse = await this.storeService.addPokemonToStore(
 				pokemon
 			);
 
