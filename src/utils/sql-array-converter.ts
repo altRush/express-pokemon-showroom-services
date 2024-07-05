@@ -1,5 +1,5 @@
 export const jsArrayToSqlStringifiedArrayConverter = (
-	array: Array<string>
+  array: Array<string>,
 ): string => {
-	return array.map((type: string) => `'${type}'`).join(',');
+  return array.map((type: string) => `'${type}'`).join(',');
 };
