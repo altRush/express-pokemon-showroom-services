@@ -1,17 +1,15 @@
 import validateModel, { ValidateModel } from '../models/validate.model';
 
 export class ValidateService {
-	private validateModel: ValidateModel;
+  constructor(private validateModel: ValidateModel) {
+    this.validateModel = validateModel;
+  }
 
-	constructor(validateModel: ValidateModel) {
-		this.validateModel = validateModel;
-	}
+  public checkGen1IfExists = async (pokemonName: string): Promise<boolean> => {
+    const hasPokemon = this.validateModel.checkGen1IfExists(pokemonName);
 
-	public checkGen1IfExists = async (pokemonName: string): Promise<boolean> => {
-		const hasPokemon = this.validateModel.checkGen1IfExists(pokemonName);
-
-		return hasPokemon;
-	};
+    return hasPokemon;
+  };
 }
 
 const validateService = new ValidateService(validateModel);

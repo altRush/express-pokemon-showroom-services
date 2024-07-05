@@ -5,10 +5,10 @@ import storeService, { StoreService } from '../services/store.service';
 import validateService, { ValidateService } from '../services/validate.service';
 
 class StoreController {
-  storeService: StoreService;
-  validateService: ValidateService;
-
-  constructor(storeService: StoreService, validateService: ValidateService) {
+  constructor(
+    public storeService: StoreService,
+    public validateService: ValidateService,
+  ) {
     this.storeService = storeService;
     this.validateService = validateService;
   }

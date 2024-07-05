@@ -3,9 +3,7 @@ import { IStorePokemonResponse } from '../interfaces/Store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {
-  private storeModel: StoreModel;
-
-  constructor(storeModel: StoreModel) {
+  constructor(private storeModel: StoreModel) {
     this.storeModel = storeModel;
   }
 

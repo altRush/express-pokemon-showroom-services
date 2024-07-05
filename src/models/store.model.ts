@@ -6,9 +6,7 @@ import {
 } from '../interfaces/Store.interface';
 
 export class StoreModel {
-  utils: IStoreModelUtils;
-
-  constructor(utils: IStoreModelUtils) {
+  constructor(public utils: IStoreModelUtils) {
     this.utils = utils;
   }
 

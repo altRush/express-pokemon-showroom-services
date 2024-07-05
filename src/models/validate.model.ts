@@ -2,9 +2,7 @@ import { Pool, QueryResult } from 'pg';
 import { dbPool } from '../utils';
 
 export class ValidateModel {
-  private dbPool: Pool;
-
-  constructor(dbPool: Pool) {
+  constructor(private dbPool: Pool) {
     this.dbPool = dbPool;
   }
   public checkGen1IfExists = async (pokemonName: string): Promise<boolean> => {
