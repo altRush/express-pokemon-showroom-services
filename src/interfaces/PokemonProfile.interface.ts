@@ -1,4 +1,4 @@
-export interface IPokemonProfile {
+export interface PokemonProfile {
   name: string;
   url: string;
   sprite: string;
