@@ -27,10 +27,10 @@ class StoreController {
     }
 
     try {
-      const hasPokemon =
+      const isPokemonNameValid =
         await this.validateService.checkGen1IfExists(pokemonName);
 
-      if (!hasPokemon) {
+      if (!isPokemonNameValid) {
         res.status(HttpStatusCode.BAD_REQUEST).json({
           message: HttpResponseMessage.GET_UNKNOWN,
         });
@@ -63,6 +63,18 @@ class StoreController {
     res: Response,
   ): Promise<void> => {
     try {
+      const { name: pokemonName } = req.body;
+
+      const isPokemonNameValid =
+        await this.validateService.checkGen1IfExists(pokemonName);
+
+      if (!isPokemonNameValid) {
+        res.status(HttpStatusCode.BAD_REQUEST).json({
+          message: HttpResponseMessage.GET_UNKNOWN,
+        });
+        return;
+      }
+
       const successResponse = await this.storeService.addPokemonToStore(
         req.body,
       );
