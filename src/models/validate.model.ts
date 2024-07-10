@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from 'pg';
-import { dbPool } from '../utils';
+import dbPool from '../services/db.service';
 
 export class ValidateModel {
   constructor(private dbPool: Pool) {

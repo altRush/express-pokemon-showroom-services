@@ -1,9 +1,10 @@
 import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
-import { jsArrayToSqlStringifiedArrayConverter, dbPool } from '../utils';
+import { jsArrayToSqlStringifiedArrayConverter } from '../utils';
 import {
   IStoreModelUtils,
   IStorePokemonResponse,
 } from '../interfaces/Store.interface';
+import dbPool from '../services/db.service';
 
 export class StoreModel {
   constructor(public utils: IStoreModelUtils) {
