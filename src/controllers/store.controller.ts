@@ -19,6 +19,13 @@ class StoreController {
   ): Promise<void> => {
     const { pokemonName } = req.params;
 
+    if (typeof pokemonName !== 'string') {
+      res.status(HttpStatusCode.BAD_REQUEST).json({
+        message: StoreHttpResponseMessage.GET_FAIL_NOT_STRING,
+      });
+      return;
+    }
+
     if (!pokemonName) {
       res.status(HttpStatusCode.BAD_REQUEST).json({
         message: StoreHttpResponseMessage.GET_FAIL,
@@ -65,6 +72,13 @@ class StoreController {
     try {
       const { name: pokemonName } = req.body;
 
+      if (typeof pokemonName !== 'string') {
+        res.status(HttpStatusCode.BAD_REQUEST).json({
+          message: StoreHttpResponseMessage.ADD_FAILED_NOT_STRING,
+        });
+        return;
+      }
+
       const isPokemonNameValid =
         await this.validateService.checkGen1IfExists(pokemonName);
 
@@ -103,18 +117,18 @@ class StoreController {
   ): Promise<void> => {
     const { pokemonStoreId } = req.body;
 
+    if (typeof pokemonStoreId !== 'number') {
+      res.status(HttpStatusCode.BAD_REQUEST).json({
+        message: StoreHttpResponseMessage.DELETE_FAILED_NAN,
+      });
+      return;
+    }
+
     try {
       const successResponse =
         await this.storeService.deletePokemonByStoreIdFromStore(pokemonStoreId);
 
       if (!successResponse.success) {
-        if (successResponse.message === 'Pokemon ID is not a number') {
-          res.status(HttpStatusCode.BAD_REQUEST).json({
-            message: StoreHttpResponseMessage.DELETE_FAILED_NAN,
-          });
-          return;
-        }
-
         res.status(HttpStatusCode.NOT_FOUND).json({
           message: StoreHttpResponseMessage.DELETE_NOT_FOUND,
         });

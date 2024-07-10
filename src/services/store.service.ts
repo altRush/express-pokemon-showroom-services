@@ -45,11 +45,6 @@ export class StoreService {
   ): Promise<StorePokemonResponse> => {
     const successResponse = { success: false, message: '' };
 
-    if (typeof pokemonStoreId !== 'number') {
-      successResponse.message = 'Pokemon Store ID is not a number';
-      return successResponse;
-    }
-
     const result = await this.storeModel.deletePokemonFromStore(pokemonStoreId);
 
     if (!result) {
