@@ -1,13 +1,8 @@
-import { Pool } from 'pg';
+type JsArrayToSqlStringifiedArrayConverter = (stringArray: string[]) => string;
 
-interface IStoreModelUtils {
-  jsArrayToSqlStringifiedArrayConverter(stringArray: string[]): string;
-  dbPool: Pool;
-}
-
-interface IStorePokemonResponse {
+interface StorePokemonResponse {
   success: boolean;
   message?: string;
 }
 
-export { IStoreModelUtils, IStorePokemonResponse };
+export { JsArrayToSqlStringifiedArrayConverter, StorePokemonResponse };

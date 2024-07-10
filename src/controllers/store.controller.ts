@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { HttpResponseMessage } from '../constants/http-response-messages.enums';
+import { StoreHttpResponseMessage } from '../constants/http-response-messages.enums';
 import HttpStatusCode from '../constants/http-statuses.enums';
 import storeService, { StoreService } from '../services/store.service';
 import validateService, { ValidateService } from '../services/validate.service';
@@ -21,7 +21,7 @@ class StoreController {
 
     if (!pokemonName) {
       res.status(HttpStatusCode.BAD_REQUEST).json({
-        message: HttpResponseMessage.GET_FAIL,
+        message: StoreHttpResponseMessage.GET_FAIL,
       });
       return;
     }
@@ -32,7 +32,7 @@ class StoreController {
 
       if (!isPokemonNameValid) {
         res.status(HttpStatusCode.BAD_REQUEST).json({
-          message: HttpResponseMessage.GET_UNKNOWN,
+          message: StoreHttpResponseMessage.GET_UNKNOWN,
         });
         return;
       }
@@ -42,13 +42,13 @@ class StoreController {
 
       if (pokemonProfileByName === null) {
         res.status(HttpStatusCode.NOT_FOUND).json({
-          message: HttpResponseMessage.GET_NOT_FOUND,
+          message: StoreHttpResponseMessage.GET_NOT_FOUND,
         });
         return;
       }
 
       res.status(HttpStatusCode.OK).json({
-        message: HttpResponseMessage.GET_SUCCESS,
+        message: StoreHttpResponseMessage.GET_SUCCESS,
         pokemon: pokemonProfileByName,
       });
     } catch (e) {
@@ -70,7 +70,7 @@ class StoreController {
 
       if (!isPokemonNameValid) {
         res.status(HttpStatusCode.BAD_REQUEST).json({
-          message: HttpResponseMessage.GET_UNKNOWN,
+          message: StoreHttpResponseMessage.GET_UNKNOWN,
         });
         return;
       }
@@ -81,18 +81,18 @@ class StoreController {
 
       if (!successResponse.success) {
         res.status(HttpStatusCode.BAD_REQUEST).json({
-          message: HttpResponseMessage.ADD_FAILED,
+          message: StoreHttpResponseMessage.ADD_FAILED,
         });
         return;
       }
 
       res.status(HttpStatusCode.CREATED).json({
-        message: HttpResponseMessage.ADD_SUCCESS,
+        message: StoreHttpResponseMessage.ADD_SUCCESS,
       });
     } catch (e) {
       res.status(HttpStatusCode.SERVICE_UNAVAILABLE).json({
         error: e,
-        message: HttpResponseMessage.ADD_FAILED,
+        message: StoreHttpResponseMessage.ADD_FAILED,
       });
     }
   };
@@ -110,24 +110,24 @@ class StoreController {
       if (!successResponse.success) {
         if (successResponse.message === 'Pokemon ID is not a number') {
           res.status(HttpStatusCode.BAD_REQUEST).json({
-            message: HttpResponseMessage.DELETE_FAILED_NAN,
+            message: StoreHttpResponseMessage.DELETE_FAILED_NAN,
           });
           return;
         }
 
         res.status(HttpStatusCode.NOT_FOUND).json({
-          message: HttpResponseMessage.DELETE_NOT_FOUND,
+          message: StoreHttpResponseMessage.DELETE_NOT_FOUND,
         });
         return;
       }
 
       res.status(HttpStatusCode.OK).json({
-        message: HttpResponseMessage.DELETE_SUCCESS,
+        message: StoreHttpResponseMessage.DELETE_SUCCESS,
       });
     } catch (e) {
       res.status(HttpStatusCode.SERVICE_UNAVAILABLE).json({
         error: e,
-        message: HttpResponseMessage.DELETE_FAILED,
+        message: StoreHttpResponseMessage.DELETE_FAILED,
       });
     }
   };

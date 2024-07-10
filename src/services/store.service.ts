@@ -1,5 +1,5 @@
-import { IPokemonProfile } from '../interfaces/PokemonProfile.interface';
-import { IStorePokemonResponse } from '../interfaces/Store.interface';
+import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { StorePokemonResponse } from '../interfaces/Store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {
@@ -8,13 +8,13 @@ export class StoreService {
   }
 
   public addPokemonToStore = async (
-    pokemon: IPokemonProfile,
-  ): Promise<IStorePokemonResponse> => {
+    pokemon: PokemonProfile,
+  ): Promise<StorePokemonResponse> => {
     const successResponse = { success: false };
     try {
-      const result = await this.storeModel.addPokemonToStore(pokemon);
+      const { success } = await this.storeModel.addPokemonToStore(pokemon);
 
-      if (result) {
+      if (success) {
         successResponse.success = true;
       }
 
@@ -29,7 +29,7 @@ export class StoreService {
 
   public getPokemonByNameFromStore = async (
     pokemonName: string,
-  ): Promise<IPokemonProfile | null> => {
+  ): Promise<PokemonProfile | null> => {
     const pokemon =
       await this.storeModel.getPokemonByNameFromStore(pokemonName);
 
@@ -42,7 +42,7 @@ export class StoreService {
 
   public deletePokemonByStoreIdFromStore = async (
     pokemonStoreId: number,
-  ): Promise<IStorePokemonResponse> => {
+  ): Promise<StorePokemonResponse> => {
     const successResponse = { success: false, message: '' };
 
     if (typeof pokemonStoreId !== 'number') {
