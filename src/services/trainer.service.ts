@@ -1,4 +1,4 @@
-import { TrainerResponse } from '../interfaces/Trainer.interface';
+import { TrainerResponse } from '../interfaces/trainer.interface';
 import trainerModel, { TrainerModel } from '../models/trainer.model';
 
 export class TrainerService {

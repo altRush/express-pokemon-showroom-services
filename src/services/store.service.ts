@@ -1,5 +1,5 @@
-import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
-import { StorePokemonResponse } from '../interfaces/Store.interface';
+import { PokemonProfile } from '../interfaces/pokemon-profile.interface';
+import { StorePokemonResponse } from '../interfaces/store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {

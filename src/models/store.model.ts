@@ -1,9 +1,9 @@
-import { PokemonProfile } from '../interfaces/PokemonProfile.interface';
+import { PokemonProfile } from '../interfaces/pokemon-profile.interface';
 import { jsArrayToSqlStringifiedArrayConverter } from '../utils';
 import {
   StorePokemonResponse,
   JsArrayToSqlStringifiedArrayConverter,
-} from '../interfaces/Store.interface';
+} from '../interfaces/store.interface';
 import dbPool from '../services/db.service';
 import { Pool } from 'pg';
 

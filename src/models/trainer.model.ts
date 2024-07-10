@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import dbPool from '../services/db.service';
-import { TrainerResponse } from '../interfaces/Trainer.interface';
+import { TrainerResponse } from '../interfaces/trainer.interface';
 
 export class TrainerModel {
   constructor(private pool: Pool) {
