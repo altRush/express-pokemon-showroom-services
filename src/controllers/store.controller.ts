@@ -13,41 +13,17 @@ class StoreController {
     this.validateService = validateService;
   }
 
-  public getPokemonByNameFromStore = async (
+  public getPokemonByStoreIdFromStore = async (
     req: Request,
     res: Response,
   ): Promise<void> => {
-    const { pokemonName } = req.params;
-
-    if (typeof pokemonName !== 'string') {
-      res.status(HttpStatusCode.BAD_REQUEST).json({
-        message: StoreHttpResponseMessage.GET_FAIL_NOT_STRING,
-      });
-      return;
-    }
-
-    if (!pokemonName) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({
-        message: StoreHttpResponseMessage.GET_FAIL,
-      });
-      return;
-    }
+    const { pokemonStoreId } = req.params;
 
     try {
-      const isPokemonNameValid =
-        await this.validateService.checkGen1IfExists(pokemonName);
+      const pokemonProfile =
+        await this.storeService.getPokemonByStoreIdFromStore(pokemonStoreId);
 
-      if (!isPokemonNameValid) {
-        res.status(HttpStatusCode.BAD_REQUEST).json({
-          message: StoreHttpResponseMessage.GET_UNKNOWN,
-        });
-        return;
-      }
-
-      const pokemonProfileByName =
-        await this.storeService.getPokemonByNameFromStore(pokemonName);
-
-      if (pokemonProfileByName === null) {
+      if (pokemonProfile === null) {
         res.status(HttpStatusCode.NOT_FOUND).json({
           message: StoreHttpResponseMessage.GET_NOT_FOUND,
         });
@@ -56,7 +32,7 @@ class StoreController {
 
       res.status(HttpStatusCode.OK).json({
         message: StoreHttpResponseMessage.GET_SUCCESS,
-        pokemon: pokemonProfileByName,
+        pokemon: pokemonProfile,
       });
     } catch (e) {
       res.status(HttpStatusCode.SERVICE_UNAVAILABLE).json({

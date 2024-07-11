@@ -41,13 +41,13 @@ export class StoreModel {
     return successResponse;
   };
 
-  public getPokemonByNameFromStore = async (
-    pokemonName: string,
+  public getPokemonByStoreIdFromStore = async (
+    pokemonStoreId: string,
   ): Promise<PokemonComplteProfile | null> => {
     const { rowCount, rows } = await dbPool.query(
       `SELECT name, url, sprite, types
       FROM stored_pokemons
-      WHERE name = '${pokemonName}'`,
+      WHERE pokemon_store_id = '${pokemonStoreId}'`,
     );
 
     if (!rowCount) {

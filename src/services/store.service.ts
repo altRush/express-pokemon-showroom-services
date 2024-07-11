@@ -30,11 +30,11 @@ export class StoreService {
     }
   };
 
-  public getPokemonByNameFromStore = async (
-    pokemonName: string,
+  public getPokemonByStoreIdFromStore = async (
+    pokemonStoreId: string,
   ): Promise<PokemonComplteProfile | null> => {
     const pokemon =
-      await this.storeModel.getPokemonByNameFromStore(pokemonName);
+      await this.storeModel.getPokemonByStoreIdFromStore(pokemonStoreId);
 
     return pokemon;
   };
