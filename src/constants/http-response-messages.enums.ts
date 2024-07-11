@@ -19,4 +19,8 @@ export enum TrainerHttpResponseMessage {
   ADD_SUCCESS = 'Trainer is successfully added',
   ADD_FAILED = 'Fail to add trainer',
   ADD_FAILED_NOT_STRING = 'Fail to add trainer (Trainer name type is not string)',
+  GET_SUCCESS = 'Trainer is successfully retrieved',
+  GET_FAILED = 'Failed to retrieve trainer',
+  GET_FAILED_NOT_STRING = 'Failed to retrieve trainer (Trainer ID is not string)',
+  GET_NOT_FOUND = 'Trainer not found',
 }
