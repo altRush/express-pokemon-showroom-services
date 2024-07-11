@@ -31,6 +31,31 @@ export class TrainerController {
       message: TrainerHttpResponseMessage.ADD_SUCCESS,
     });
   };
+
+  getTrainer = async (req: Request, res: Response): Promise<void> => {
+    const { trainerId } = req.params;
+
+    if (typeof trainerId !== 'string') {
+      res.status(HttpStatusCode.BAD_REQUEST).json({
+        message: TrainerHttpResponseMessage.GET_FAILED_NOT_STRING,
+      });
+      return;
+    }
+
+    const trainer = await this.trainerService.getTrainer(trainerId);
+
+    if (!trainer) {
+      res.status(HttpStatusCode.BAD_REQUEST).json({
+        message: TrainerHttpResponseMessage.GET_NOT_FOUND,
+      });
+      return;
+    }
+
+    res.status(HttpStatusCode.OK).json({
+      message: TrainerHttpResponseMessage.GET_SUCCESS,
+      trainer,
+    });
+  };
 }
 
 const trainerController = new TrainerController(trainerService);

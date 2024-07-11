@@ -1,20 +1,22 @@
-import { PokemonProfile } from '../interfaces/pokemon-profile.interface';
-import { jsArrayToSqlStringifiedArrayConverter } from '../utils';
+import {
+  PokemonComplteProfile,
+  PokemonProfile,
+} from '../interfaces/pokemon-profile.interface';
+import { jsArrayToSqlArrayConverter } from '../utils';
 import {
   StorePokemonResponse,
-  JsArrayToSqlStringifiedArrayConverter,
+  JsArrayToSqlArrayConverter,
 } from '../interfaces/store.interface';
 import dbPool from '../services/db.service';
-import { Pool } from 'pg';
+import { Pool, QueryResult } from 'pg';
+import { PokemonTypes } from '../interfaces/types.interface';
 
 export class StoreModel {
   constructor(
-    public jsArrayToSqlStringifiedArrayConverter: JsArrayToSqlStringifiedArrayConverter,
+    public jsArrayToSqlArrayConverter: JsArrayToSqlArrayConverter,
     private pool: Pool,
   ) {
-    this.jsArrayToSqlStringifiedArrayConverter =
-      jsArrayToSqlStringifiedArrayConverter;
-    this.pool = pool;
+    this.jsArrayToSqlArrayConverter = jsArrayToSqlArrayConverter;
   }
 
   public addPokemonToStore = async (
@@ -25,8 +27,7 @@ export class StoreModel {
     };
     const { name, url, sprite, types } = pokemonProfile;
 
-    const sqlTypeNamesStringifiedArray =
-      this.jsArrayToSqlStringifiedArrayConverter(types);
+    const sqlTypeNamesStringifiedArray = this.jsArrayToSqlArrayConverter(types);
 
     const { command, rowCount } = await this.pool.query(`
       INSERT INTO public.stored_pokemons (name, url, sprite, types)
@@ -42,7 +43,7 @@ export class StoreModel {
 
   public getPokemonByNameFromStore = async (
     pokemonName: string,
-  ): Promise<PokemonProfile | null> => {
+  ): Promise<PokemonComplteProfile | null> => {
     const { rowCount, rows } = await dbPool.query(
       `SELECT name, url, sprite, types
       FROM stored_pokemons
@@ -55,15 +56,13 @@ export class StoreModel {
 
     const pokemon: PokemonProfile = rows[0];
 
-    const sqlPokemonTypesArray = this.jsArrayToSqlStringifiedArrayConverter(
-      pokemon.types,
-    );
+    const sqlPokemonTypesArray = this.jsArrayToSqlArrayConverter(pokemon.types);
 
-    const { rows: pokemonTypes } = await dbPool.query(
+    const { rows: pokemonTypes } = (await dbPool.query(
       `select t.* from unnest(array[${sqlPokemonTypesArray}]) type_name_s left join types t on t.type_name = type_name_s`,
-    );
+    )) as QueryResult<PokemonTypes>;
 
-    const pokemonProfile = {
+    const pokemonProfile: PokemonComplteProfile = {
       ...pokemon,
       types: pokemonTypes,
     };
@@ -82,9 +81,6 @@ export class StoreModel {
   };
 }
 
-const storeModel = new StoreModel(
-  jsArrayToSqlStringifiedArrayConverter,
-  dbPool,
-);
+const storeModel = new StoreModel(jsArrayToSqlArrayConverter, dbPool);
 
 export default storeModel;

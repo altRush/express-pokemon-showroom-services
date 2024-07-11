@@ -1,4 +1,7 @@
-import { PokemonProfile } from '../interfaces/pokemon-profile.interface';
+import {
+  PokemonComplteProfile,
+  PokemonProfile,
+} from '../interfaces/pokemon-profile.interface';
 import { StorePokemonResponse } from '../interfaces/store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
@@ -29,13 +32,9 @@ export class StoreService {
 
   public getPokemonByNameFromStore = async (
     pokemonName: string,
-  ): Promise<PokemonProfile | null> => {
+  ): Promise<PokemonComplteProfile | null> => {
     const pokemon =
       await this.storeModel.getPokemonByNameFromStore(pokemonName);
-
-    if (!pokemon) {
-      return null;
-    }
 
     return pokemon;
   };
@@ -47,11 +46,10 @@ export class StoreService {
 
     const result = await this.storeModel.deletePokemonFromStore(pokemonStoreId);
 
-    if (!result) {
-      return successResponse;
+    if (result) {
+      successResponse.success = true;
     }
 
-    successResponse.success = true;
     return successResponse;
   };
 }

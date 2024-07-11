@@ -18,6 +18,12 @@ export class TrainerService {
 
     return successResponse;
   };
+
+  getTrainer = async (trainerId: string) => {
+    const trainer = await this.trainerModel.getTrainer(trainerId);
+
+    return trainer;
+  };
 }
 
 const trainerService = new TrainerService(trainerModel);
