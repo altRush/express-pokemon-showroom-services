@@ -13,7 +13,7 @@ const { addTrainer, getTrainer } = trainerController;
 router.get('/store/:pokemonStoreId', getPokemonByStoreIdFromStore);
 router.post('/store', addPokemonToStore);
 router.delete('/store', deletePokemonFromStore);
-router.post('/trainer', addTrainer);
 router.get('/trainer/:trainerId', getTrainer);
+router.post('/trainer', addTrainer);
 
 export default router;

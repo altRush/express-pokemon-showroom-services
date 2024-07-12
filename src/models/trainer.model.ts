@@ -42,8 +42,6 @@ export class TrainerModel {
 
     const trainerRawProfile = rows[0];
 
-    console.log({ trainerRawProfile });
-
     const sqlPokemonIdsArray = this.jsArrayToSqlArrayConverter(
       trainerRawProfile.pokemon_store_id_array,
     );
