@@ -8,10 +8,7 @@ class StoreController {
   constructor(
     public storeService: StoreService,
     public validateService: ValidateService,
-  ) {
-    this.storeService = storeService;
-    this.validateService = validateService;
-  }
+  ) {}
 
   public getPokemonByStoreIdFromStore = async (
     req: Request,

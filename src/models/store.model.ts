@@ -15,9 +15,7 @@ export class StoreModel {
   constructor(
     public jsArrayToSqlArrayConverter: JsArrayToSqlArrayConverter,
     private pool: Pool,
-  ) {
-    this.jsArrayToSqlArrayConverter = jsArrayToSqlArrayConverter;
-  }
+  ) {}
 
   public addPokemonToStore = async (
     pokemonProfile: PokemonProfile,

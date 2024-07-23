@@ -6,9 +6,7 @@ import { StorePokemonResponse } from '../interfaces/store.interface';
 import storeModel, { StoreModel } from '../models/store.model';
 
 export class StoreService {
-  constructor(private storeModel: StoreModel) {
-    this.storeModel = storeModel;
-  }
+  constructor(private storeModel: StoreModel) {}
 
   public addPokemonToStore = async (
     pokemon: PokemonProfile,

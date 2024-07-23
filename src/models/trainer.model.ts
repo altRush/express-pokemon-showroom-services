@@ -8,10 +8,7 @@ export class TrainerModel {
   constructor(
     private pool: Pool,
     private jsArrayToSqlArrayConverter: JsArrayToSqlArrayConverter,
-  ) {
-    this.pool = pool;
-    this.jsArrayToSqlArrayConverter = jsArrayToSqlArrayConverter;
-  }
+  ) {}
 
   addTrainer = async (trainerName: string): Promise<TrainerResponse> => {
     const successResponse = {

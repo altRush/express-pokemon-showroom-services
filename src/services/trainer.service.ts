@@ -2,9 +2,7 @@ import { TrainerResponse } from '../interfaces/trainer.interface';
 import trainerModel, { TrainerModel } from '../models/trainer.model';
 
 export class TrainerService {
-  constructor(private trainerModel: TrainerModel) {
-    this.trainerModel = trainerModel;
-  }
+  constructor(private trainerModel: TrainerModel) {}
 
   addTrainer = async (trainerName: string): Promise<TrainerResponse> => {
     const successResponse = {

@@ -4,9 +4,7 @@ import HttpStatusCode from '../constants/http-statuses.enums';
 import { TrainerHttpResponseMessage } from '../constants/http-response-messages.enums';
 
 export class TrainerController {
-  constructor(private trainerService: TrainerService) {
-    this.trainerService = trainerService;
-  }
+  constructor(private trainerService: TrainerService) {}
 
   addTrainer = async (req: Request, res: Response): Promise<void> => {
     const { name: trainerName } = req.body;
